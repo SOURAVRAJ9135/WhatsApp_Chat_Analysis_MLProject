@@ -7,3 +7,4 @@ streamlit
 WordCloud
 emoji
 Counter
+URLEXtract
