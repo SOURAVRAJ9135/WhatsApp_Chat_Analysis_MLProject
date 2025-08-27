@@ -1,4 +1,12 @@
+import pandas as pd
+import numpy as np
+from collections import Counter # counter gives count of text/word
+from gotstopwords import gotstopwords
 from urlextract import URLExtract
+from wordcloud import WordCloud 
+import emoji
+import nltk
+
 extractor=URLExtract()
 
 def fetch_stats(selected_user,df):
@@ -24,27 +32,100 @@ def fetch_stats(selected_user,df):
 
     return num_messages,len(words),num_media,len(links)
 
-    
+
+def most_busy_users(df):
+    x=df['user'].value_counts().head()
+    df = round((df['user'].value_counts()/df.shape[0])*100,2).reset_index().rename(columns={"user":"name", "count":"percentage"})
+    return x,df
+
+
+hinglish_stopwords=gotstopwords.load("nltk", "hn")
+
+def create_wordcloud(selected_user,df):
+    if selected_user!= "Overall":
+        df = df[df['user']==selected_user]
+
+    temp = df[df['user']!='group_notifications']
+    temp = temp[temp['message'] != "<Media omitted>\n"]
+    words=[]
+    for message in temp['message']:
+        for word in message.lower().split():
+            if word not in hinglish_stopwords:
+                words.append(word)
 
     
+    wc = WordCloud(width=300,height=300,min_font_size=10,background_color='whitesmoke')
+    df_wc= wc.generate(temp['message'].str.cat(sep=" "))
+    return df_wc
 
 
 
-    # if selected_user== "Overall":
-    #     # fetch no of messages
-    #     num_messages=df.shape[0]
-    #     # fetch no of words
-    #     words=[]
-    #     for message in df['message']:
-    #         words.extend(message.split())
+def most_common_words(selected_user,df):
+    if selected_user!= "Overall":
+        df = df[df['user']==selected_user]
 
-    #     return num_messages,len(words)
+    temp = df[df['user']!='group_notifications']
+    temp = temp[temp['message'] != "<Media omitted>\n"]
+    words=[]
+    for message in temp['message']:
+        for word in message.lower().split():
+            if word not in hinglish_stopwords:
+                words.append(word)
+
+    most_common_df=pd.DataFrame(Counter(words).most_common(20))
+    return most_common_df
+
+def emoji_giver(selected_user,df):
+    if selected_user!= "Overall":
+        df = df[df['user']==selected_user]
     
-    # else:
-    #     new_df= df[df['user']== selected_user]
-    #     num_messages= new_df.shape[0]
-    #     words=[]
-    #     for message in new_df['message']:
-    #         words.extend(message.split())
+    emojis=[]
+    for message in df['message']:
+        emojis.extend([c for c in message if c in emoji.EMOJI_DATA])
 
-    #     return num_messages,len(words)
+    emoji_df= pd.DataFrame(Counter(emojis).most_common(len(Counter(emojis))))
+    return emoji_df
+
+def monthly_timeline(selected_user,df):
+    if selected_user!= "Overall":
+        df = df[df['user']==selected_user]
+
+    
+    timeline = df.groupby(['year','month_num','month']).count()['message'].reset_index()
+
+    time=[]
+    for i  in range(timeline.shape[0]):
+        time.append(timeline['month'][i] + "-" + str(timeline['year'][i]))
+
+    timeline['time']=time
+        
+    return timeline
+
+def daily_timeline(selected_user,df):
+    if selected_user!= "Overall":
+        df = df[df['user']==selected_user]
+
+    daily_timeline = df.groupby(['normal_date']).count()['message'].reset_index()
+    return daily_timeline
+
+
+def week_activity_map(selected_user,df):
+    if selected_user!= "Overall":
+        df = df[df['user']==selected_user]
+    
+    return df['day_name'].value_counts()
+
+
+def month_activity_map(selected_user,df):
+    if selected_user!= "Overall":
+        df = df[df['user']==selected_user]
+
+    return df['month'].value_counts()
+
+
+def activity_heatmap(selected_user,df):
+    if selected_user!= "Overall":
+        df = df[df['user']==selected_user]
+
+    user_heatmap = df.pivot_table(index='day_name',columns='period',values='message',aggfunc='count').fillna(0)
+    return user_heatmap
