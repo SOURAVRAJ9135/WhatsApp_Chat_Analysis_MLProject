@@ -1,0 +1,9 @@
+pandas
+numpy
+gotstopwords
+matplotlib
+seaborn
+streamlit
+WordCloud
+emoji
+Counter
