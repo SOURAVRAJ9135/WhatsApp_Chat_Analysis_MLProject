@@ -1,51 +1,61 @@
 # WhatsApp_Chat_Analysis_MLProject
 WhatsApp Chat Analyzer 📊💬
-
-A Streamlit-powered web app that provides deep insights into WhatsApp chats (24-hour format) with interactive analysis and visualizations.
+Analyze your WhatsApp group chats like never before!
+This Streamlit-powered web app takes your exported WhatsApp chat (in 24-hour format) and provides interactive insights, visualizations, and fun statistics.
 
 🔍 Features
 
-Overall Statistics – Total messages, words, media shared, and links shared.
-
-Busiest Day & Month – Identify the most active days and months.
-
-Most Active User in Group – See who contributes the most messages along with their percentage share.
-
-Word Cloud – Visualize the most frequently used words in the chat.
-
-Most Common Words – Explore frequently used words across conversations.
-
-Emoji Analysis – Analyze emoji usage by any user in the group.
-
-Weekly Activity Heatmap – Discover chat activity patterns across days and hours.
-
+✔️ Overall Statistics – Total messages, words, media shared, and links shared
+✔️ Busiest Day & Month – Identify the most active days and months
+✔️ Most Active User – See top contributors along with their percentage share
+✔️ Word Cloud – Visualize the most commonly used words
+✔️ Most Common Words – Explore frequent vocabulary across chats
+✔️ Emoji Analysis – Discover emoji usage by any user in the group
+✔️ Weekly Activity Heatmap – Patterns of activity across days & hours
 🛠️ Tech Stack / Libraries Used
 
-This project is built using Python along with the following libraries:
+Built with Python and:
 
-Streamlit – For creating the interactive web app.
+Streamlit
+ – Interactive web app framework
 
-Pandas – For data manipulation and analysis.
+Pandas
+ – Data manipulation & analysis
 
-Matplotlib & Seaborn – For data visualization.
+Matplotlib
+ & Seaborn
+ – Visualizations
 
-WordCloud – To generate word clouds from chat text.
+WordCloud
+ – Word cloud generation
 
-Emoji – For emoji extraction and analysis.
+Emoji
+ – Emoji extraction & analysis
 
-urlextract – To detect and count links shared in chats.
-
-re / regex – For text cleaning and preprocessing.
-
-datetime – To handle timestamps and activity patterns.
-
-🚀 How it Works
+urlextract
+ – Link detection
+ 📂 How to Use
 
 Export your WhatsApp chat in text format (24-hour format).
 
-Upload the file to the app.
+WhatsApp → Chat → Export Chat → Without Media → Save .txt file.
 
-Instantly explore detailed statistics, trends, and visualizations about your chat.
+Open the app (locally or Live Demo
+).
+
+Upload the chat file.
+
+Explore your chat insights instantly!
+
+🔮 Future Improvements
+
+Sentiment analysis of chats
+
+Network graph of user interactions
+
+Comparison between different users
+
+Dark mode theme
 
 Built with Python and Streamlit, this project is lightweight, easy to run, and delivers engaging insights into WhatsApp group conversations.
 Here's link to app https://whatsappchatanalysismlproject-7xxq3qh3kisqckkaunbgjk.streamlit.app/
